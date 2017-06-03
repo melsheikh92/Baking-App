@@ -13,6 +13,7 @@ import com.example.mahmoud.bakingapp.models.Recipe;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -25,7 +26,6 @@ public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.Cu
     Context mcontext;
 
     ArrayList<Recipe> data;
-    ClickListener clickListener;
 
     public MainCustomAdapter(final Context mcontext, final ArrayList<Recipe> data, RecyclerView recyclerView) {
         this.mcontext = mcontext;
@@ -34,9 +34,9 @@ public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.Cu
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(mcontext, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-              //  Toast.makeText(mcontext, data.get(position).getName(), Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(mcontext, data.get(position).getName(), Toast.LENGTH_SHORT).show();
 
-                MainActivity.loadDetailedFragment(data.get(position));
+                MainActivity.loadDetailedFragment(view, data.get(position));
 
             }
         }));
@@ -57,7 +57,6 @@ public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.Cu
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-        final Recipe element = data.get(position);
         holder.title.setText(data.get(position).getName());
 
     }
@@ -69,18 +68,17 @@ public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.Cu
 
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_title)
         TextView title;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
-            //  ButterKnife.bind(CustomViewHolder.this, itemView);
-            title = (TextView) itemView.findViewById(R.id.tv_title);
+            ButterKnife.bind(CustomViewHolder.this, itemView);
 
         }
 
 
     }
-
 
 
 }
