@@ -19,16 +19,20 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     static FragmentManager fragmentManager;
+    public static boolean twoPaneFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         ButterKnife.bind(this);
+
+
         if (savedInstanceState != null) {
             backCounter = savedInstanceState.getInt("counter");
 
         }
+
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         fragmentManager = getSupportFragmentManager();
@@ -41,10 +45,19 @@ public class MainActivity extends AppCompatActivity {
             ft.replace(R.id.mainview, fragment);
             ft.commit();
         }
+        if (findViewById(R.id.detailview) != null) {
+            twoPaneFlag = true;
+
+        }
+
     }
+
+    static MainFragment mfragment;
+
 
     public static void installMain() {
 
+        mfragment = new MainFragment();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(R.id.mainview, new MainFragment());
         ft.commit();
@@ -58,8 +71,16 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable("recipe", recipe);
         fragment.setArguments(bundle);
-        ft.replace(R.id.mainview, fragment);
-        ft.addSharedElement(view, "element").commit();
+        if (twoPaneFlag) {
+            ft.replace(R.id.detailview, fragment);
+
+        } else {
+            ft.replace(R.id.mainview, fragment);
+        }
+        if (view != null)
+            ft.addSharedElement(view, "element").commit();
+        else
+            ft.commit();
     }
 
 
@@ -83,4 +104,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 }

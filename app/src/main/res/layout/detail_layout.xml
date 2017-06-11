@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="5dp">
+    android:layout_marginRight="3dp"
+    android:orientation="vertical">
 
 
     <TextView
@@ -17,72 +17,43 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:transitionName="element"
-        app:layout_constraintBottom_toTopOf="@+id/tvb"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
 
+        />
 
-    <TextView
-        android:id="@+id/tvb"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/divider"
-        android:text="Ingridients"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.0"
+    <ScrollView
+        android:id="@+id/scrollsteps"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="50dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_ingridient">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_steps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+    </ScrollView>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_ingridient"
         android:layout_width="0dp"
         android:layout_height="150dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="2dp"
+
+
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvb">
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        app:layout_constraintVertical_chainStyle="packed">
 
     </android.support.v7.widget.RecyclerView>
 
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="10dp"
-        android:background="@color/divider"
-        android:text="Steps"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/rv_steps"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_ingridient" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_steps"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_ingridient">
-
-    </android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>

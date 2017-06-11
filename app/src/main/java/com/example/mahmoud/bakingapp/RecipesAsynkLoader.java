@@ -33,6 +33,12 @@ public class RecipesAsynkLoader extends AsyncTaskLoader<ArrayList<Recipe>> {
     }
 
     @Override
+    protected void onStartLoading() {
+        super.onStartLoading();
+        forceLoad();
+    }
+
+    @Override
     public ArrayList<Recipe> loadInBackground() {
 
         ArrayList<Recipe> arr = new ArrayList<Recipe>();
@@ -64,6 +70,7 @@ public class RecipesAsynkLoader extends AsyncTaskLoader<ArrayList<Recipe>> {
                         Step mstep = new Step();
 
                         mstep.setDescription(stepsArr.getJSONObject(j).getString("description"));
+                        mstep.setShortDescription(stepsArr.getJSONObject(j).getString("shortDescription"));
                         mstep.setThumbnailURL(stepsArr.getJSONObject(j).getString("thumbnailURL"));
                         mstep.setVideoURL(stepsArr.getJSONObject(j).getString("videoURL"));
                         mstep.setId(stepsArr.getJSONObject(j).getInt("id"));

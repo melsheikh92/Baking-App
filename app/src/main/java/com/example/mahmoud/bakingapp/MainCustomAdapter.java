@@ -31,12 +31,15 @@ public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.Cu
         this.mcontext = mcontext;
         this.data = data;
 
+
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(mcontext, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 //  Toast.makeText(mcontext, data.get(position).getName(), Toast.LENGTH_SHORT).show();
-
-                MainActivity.loadDetailedFragment(view, data.get(position));
+                if (!MainActivity.twoPaneFlag)
+                    MainActivity.loadDetailedFragment(view, data.get(position));
+                else
+                    MainActivity.loadDetailedFragment(null, data.get(position));
 
             }
         }));
