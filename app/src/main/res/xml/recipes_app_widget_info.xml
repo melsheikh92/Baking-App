@@ -4,7 +4,7 @@
     android:initialLayout="@layout/recipes_app_widget"
     android:minHeight="180dp"
     android:minWidth="180dp"
-    android:previewImage="@drawable/example_appwidget_preview"
+    android:previewImage="@mipmap/ic_launcher"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="3000"
+    android:updatePeriodMillis="30"
     android:widgetCategory="home_screen|keyguard"></appwidget-provider>
