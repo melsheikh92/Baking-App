@@ -33,17 +33,17 @@ public class MainActivityUITest {
 
     }
 
-    @Test
-    public void checkRecyclerViewTestRecipes() throws Exception {
-
-       // onData(anything()).inAdapterView(withId(R.id.recycleview)).atPosition(1).perform(click());
-//        onView(ViewMatchers.withId(R.id.recycleview))
-//                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-
-        onView(withId(R.id.tv_title)).check(matches(withText("Nutella Pei")));
-
-
-    }
+//    @Test
+//    public void checkRecyclerViewTestRecipes() throws Exception {
+//
+//       // onData(anything()).inAdapterView(withId(R.id.recycleview)).atPosition(1).perform(click());
+////        onView(ViewMatchers.withId(R.id.recycleview))
+////                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+//
+////        onView(withId(R.id.tv_title)).check(matches(withText("Nutella Pei")));
+//
+//
+//    }
 
 
 }

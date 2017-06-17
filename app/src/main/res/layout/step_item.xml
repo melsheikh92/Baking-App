@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:layout_marginLeft="5dp"
-            app:srcCompat="@drawable/arrow" />
+            android:src="@drawable/arrow" />
 
     </FrameLayout>
 </android.support.v7.widget.CardView>
