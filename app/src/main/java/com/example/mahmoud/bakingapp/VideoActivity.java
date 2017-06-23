@@ -113,16 +113,19 @@ public class VideoActivity extends AppCompatActivity {
         mExoPlayer = null;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        releasePlayer();
-    }
+
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+    protected void onPause() {
+        releasePlayer();
+        super.onPause();
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
         outState.putParcelable("step_here", step);
-        super.onSaveInstanceState(outState, outPersistentState);
+        super.onSaveInstanceState(outState);
     }
 }
 

@@ -3,6 +3,15 @@
     android:layout_height="match_parent"
     >
 
+    <Button
+        android:id="@+id/appwidget_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/primary"
+        android:text="Next recipe"
+        android:textColor="@android:color/background_light" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
             FragmentTransaction ft = fragmentManager.beginTransaction();
             DetailFragment fragment = new DetailFragment();
+            fragment.getTag();
             ft.replace(R.id.mainview, fragment);
             ft.commit();
         }

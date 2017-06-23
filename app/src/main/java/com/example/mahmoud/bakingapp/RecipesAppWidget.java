@@ -36,7 +36,7 @@ public class RecipesAppWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, Recipe mRecipe,
                                 int appWidgetId) {
-        Log.d("myTag","updateAppWidget");
+        Log.d("myTag", "updateAppWidget");
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipes_app_widget);
         views.setTextViewText(R.id.appwidget_text, mRecipe.getName());
@@ -47,23 +47,40 @@ public class RecipesAppWidget extends AppWidgetProvider {
         }
 
         views.setTextViewText(R.id.appwidget_detail, ingr);
-    ;
+
+
+        Intent intent = new Intent(context, RecipesAppWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.appwidget_btn, pendingIntent);
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
     }
 
-
-
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+        Intent intent_auto = new Intent(context, UpdateWidgetService.class);
+        intent_auto.setAction(ACTION_UPDATEWIDGET);
+        context.startService(intent_auto);
+    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Intent intent = new Intent(context, UpdateWidgetService.class);
-        intent.setAction(ACTION_UPDATEWIDGET);
-        context.startService(intent);
-        Log.d("myTag","onUpdate");
+        Intent intent_auto = new Intent(context, UpdateWidgetService.class);
+        intent_auto.setAction(ACTION_UPDATEWIDGET);
+        context.startService(intent_auto);
+       // sendBroadcast(intent);
+
+
+            Log.d("myTag", "onUpdate");
+
 
 
     }
+
     @Override
     public void onEnabled(Context context) {
     }
@@ -77,7 +94,7 @@ public class RecipesAppWidget extends AppWidgetProvider {
     public static void updateMyAppWidget(Context context, AppWidgetManager appWidgetManager, Recipe mRecipe, int[] widgetIDS) {
 
         for (int id : widgetIDS) {
-            Log.d("myTag","updateMyAppWidget");
+            Log.d("myTag", "updateMyAppWidget");
 
             updateAppWidget(context, appWidgetManager, mRecipe, id);
         }
