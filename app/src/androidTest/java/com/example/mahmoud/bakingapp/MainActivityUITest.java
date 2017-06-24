@@ -50,12 +50,9 @@ public class MainActivityUITest {
     @Test
     public void checkTitle() throws Exception {
         try {
-
-
             onView(withId(R.id.tv_toolbartitle))
                     .check(matches(withText("Baking Recipes")));
         } catch (Exception e) {
-
             e.printStackTrace();
         }
     }

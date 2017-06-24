@@ -71,9 +71,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.CustomViewHo
 
         holder.tv_short.setText(shortdesc);
         if (!img.isEmpty()) {
-//            Glide.with(mcontext).load(img).into(holder.iv_go);
-
-         //   holder.playerView.setVisibility(View.VISIBLE);
+            Glide.with(mcontext).load(img).into(holder.iv_go);
 
 
         }
@@ -88,6 +86,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.CustomViewHo
 
         @BindView(R.id.tv_short)
         TextView tv_short;
+        @BindView(R.id.iv_go)
+        ImageView iv_go;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
