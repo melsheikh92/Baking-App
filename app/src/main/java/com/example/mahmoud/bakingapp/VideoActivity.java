@@ -1,5 +1,6 @@
 package com.example.mahmoud.bakingapp;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.mahmoud.bakingapp.models.Step;
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
@@ -47,6 +49,9 @@ public class VideoActivity extends AppCompatActivity {
 
     @BindView(R.id.tv_idtxt)
     TextView tv_idtxt;
+    long resumePosition = 0;
+    int resumeWindow = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +74,7 @@ public class VideoActivity extends AppCompatActivity {
 
         );
         if (savedInstanceState != null) {
-
+            resumePosition = savedInstanceState.getLong("resumePosition");
             step = savedInstanceState.getParcelable("step_here");
             url = step.getVideoURL();
             Uri myUri = Uri.parse(url);
@@ -85,8 +90,6 @@ public class VideoActivity extends AppCompatActivity {
             Uri myUri = Uri.parse(url);
             initializePlayer(myUri);
             video_txt.setText(step.getDescription());
-            //   if (step.getThumbnailURL() != null && step.getThumbnailURL() != "")
-            //  Glide.with(this).load(step.getThumbnailURL()).into(iv_step);
             int f = step.getId().intValue() + 1;
             tv_idtxt.setText("Step " + f);
 
@@ -103,29 +106,56 @@ public class VideoActivity extends AppCompatActivity {
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
                     this, step.getShortDescription()), new DefaultExtractorsFactory(), null, null);
             mExoPlayer.prepare(mediaSource);
+
+
+            boolean haveResumePosition = resumeWindow != C.INDEX_UNSET;
+            if (haveResumePosition) {
+                mExoPlayer.seekTo(resumeWindow, resumePosition);
+            }
+            mExoPlayer.prepare(mediaSource, !haveResumePosition, false);
+
+
             mExoPlayer.setPlayWhenReady(true);
         }
     }
 
     private void releasePlayer() {
+        resumeWindow = mExoPlayer.getCurrentWindowIndex();
+        resumePosition = mExoPlayer.isCurrentWindowSeekable() ? Math.max(0, mExoPlayer.getCurrentPosition())
+                : C.TIME_UNSET;
         mExoPlayer.stop();
         mExoPlayer.release();
         mExoPlayer = null;
     }
 
 
-
     @Override
     protected void onPause() {
-        releasePlayer();
         super.onPause();
+        if (mExoPlayer != null) {
+            releasePlayer();
+        }
     }
 
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        releasePlayer();
+
         outState.putParcelable("step_here", step);
+        outState.putLong("resumePosition", resumePosition);
+        outState.putLong("resumeWindow", resumeWindow);
+
         super.onSaveInstanceState(outState);
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        releasePlayer();
+        resumePosition = 0;
+        setIntent(intent);
+    }
+
 }
 

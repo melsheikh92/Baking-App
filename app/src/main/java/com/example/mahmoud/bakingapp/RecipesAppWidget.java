@@ -5,6 +5,8 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -62,22 +64,26 @@ public class RecipesAppWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        Intent intent_auto = new Intent(context, UpdateWidgetService.class);
-        intent_auto.setAction(ACTION_UPDATEWIDGET);
-        context.startService(intent_auto);
+        if (isConnectedToInternet(context)) {
+
+            Intent intent_auto = new Intent(context, UpdateWidgetService.class);
+            intent_auto.setAction(ACTION_UPDATEWIDGET);
+            context.startService(intent_auto);
+        }
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Intent intent_auto = new Intent(context, UpdateWidgetService.class);
-        intent_auto.setAction(ACTION_UPDATEWIDGET);
-        context.startService(intent_auto);
-       // sendBroadcast(intent);
+
+        if (isConnectedToInternet(context)) {
+            Intent intent_auto = new Intent(context, UpdateWidgetService.class);
+            intent_auto.setAction(ACTION_UPDATEWIDGET);
+            context.startService(intent_auto);
+            // sendBroadcast(intent);
 
 
             Log.d("myTag", "onUpdate");
-
-
+        }
 
     }
 
@@ -99,5 +105,24 @@ public class RecipesAppWidget extends AppWidgetProvider {
             updateAppWidget(context, appWidgetManager, mRecipe, id);
         }
     }
+
+    public boolean isConnectedToInternet(Context context) {
+        boolean isConnected;
+        try {
+
+            ConnectivityManager cm =
+                    (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            isConnected = activeNetwork != null &&
+                    activeNetwork.isConnectedOrConnecting();
+
+
+        } catch (Exception e) {
+            return false;
+        }
+        return isConnected;
+    }
+
 }
 

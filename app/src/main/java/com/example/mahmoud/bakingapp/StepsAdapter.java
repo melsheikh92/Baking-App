@@ -6,9 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.mahmoud.bakingapp.models.Step;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 
 import java.util.List;
 
@@ -67,9 +70,13 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.CustomViewHo
         String videoUrl = data.get(position).getVideoURL();
 
         holder.tv_short.setText(shortdesc);
-//        if (img != "" && img != null)
-//            Glide.with(mcontext).load(img).into(holder.iv_thumb);
+        if (!img.isEmpty()) {
+//            Glide.with(mcontext).load(img).into(holder.iv_go);
 
+         //   holder.playerView.setVisibility(View.VISIBLE);
+
+
+        }
     }
 
     @Override

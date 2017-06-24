@@ -22,7 +22,9 @@ android {
         jcenter()
     }
 }
-
+ext {
+    toroVersion = '2.3.1'
+}
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
